@@ -28,7 +28,7 @@
     "overflow-wrap"
   ],
   "dependencies": {
-    "utrie": "^1.0.2"
+    "utrie": "github:Gerrnperl/utrie"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^19.0.0",

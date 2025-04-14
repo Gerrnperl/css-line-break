@@ -69,8 +69,10 @@ export const decode = (base64: string): ArrayBuffer | number[] => {
 
     if (base64[base64.length - 1] === '=') {
         bufferLength--;
+        len--;
         if (base64[base64.length - 2] === '=') {
             bufferLength--;
+            len--;
         }
     }
 
@@ -89,8 +91,12 @@ export const decode = (base64: string): ArrayBuffer | number[] => {
         encoded4 = lookup[base64.charCodeAt(i + 3)];
 
         bytes[p++] = (encoded1 << 2) | (encoded2 >> 4);
-        bytes[p++] = ((encoded2 & 15) << 4) | (encoded3 >> 2);
-        bytes[p++] = ((encoded3 & 3) << 6) | (encoded4 & 63);
+        if (i + 2 < len) {
+            bytes[p++] = ((encoded2 & 15) << 4) | (encoded3 >> 2);
+        }
+        if (i + 3 < len) {
+            bytes[p++] = ((encoded3 & 3) << 6) | (encoded4 & 63);
+        }
     }
 
     return buffer;
